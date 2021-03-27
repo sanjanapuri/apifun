@@ -1,0 +1,23 @@
+h1{
+	text-align: center;
+	font-family: 'Poppins', sans-serif;}
+
+h2{
+	font-family: 'Poppins', sans-serif;	font-size: 15px;
+	padding-left: 10px;
+
+}
+
+a:hover{
+	color: 	#FF0000; 
+	cursor: pointer;
+}
+
+.box{
+	border: 1px solid green;
+}
+
+#data{
+	font-family: 'Poppins', sans-serif;	font-size: 15px;
+
+}

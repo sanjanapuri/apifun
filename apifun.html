@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8"/>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="apifunstyles.css">
+	<script>
+		function getBooks(){
+			request = new XMLHttpRequest();
+			console.log("1 - request object created"); 
+
+			request.open("GET", "https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=3aJ8qKdJ7k0GQd4Gvd90wq5PRMhMlttS", true)
+
+			console.log("2 - opened request file"); 
+
+			request.onreadystatechange = function() {
+				if(request.readyState == 4 && request.status == 200){
+					
+					console.log("5 - response recieved"); 
+					result = request.responseText;
+					booklist = JSON.parse(result);
+
+					iter = 1; 
+					strHTML = "<ul>"; 
+					booklist.results.books.forEach(function(book){
+						strHTML += "<li>" + "RANK " + iter + ": " + book.title + " by " + book.author + "</li>";
+						iter++; 
+					})
+					strHTML += "</ul>"; 
+					document.getElementById("data").innerHTML = strHTML; 
+							
+
+				} else if (request.readyState == 4 && request.status != 200){
+					document.getElementById("data").innerHTML = "Something is wrong! Check the logs to see wehre this went off the rails"; 
+				} else if (request.readyState == 3){
+					document.getElementById("data").innerHTML = "Too soon! Try again"; 
+				}
+			}
+
+			request.send(); 
+			console.log("4 - request sent"); 
+		}
+	</script>
+</head>
+
+<body onload="getBooks()">
+	<h1>API Questions</h1>
+	<h2>1.) This API lists a variety of information about the top 15 New York Times Bestselling hardcover fiction books for the week of March 28, 2021 (the best sellers lists are published early online).</h2>
+	<h2>2.) The API was taken from <a href="https://developer.nytimes.com/">The New York Times Developer Network</a>.</h2>
+	<h2>3.) The options I used for the API request were hardcover fiction books for the most recent bestsellers list (/lists/current/hardcover-fiction in the URL).</h2>
+	<h2>4.) This API could be useful as a sidebar feature in a site for a book recommendations. It could also be useful on a library's homepage so that visitors could see the latest books to request. </h2>
+	<h1>Bestseller List (as taken from the API)</h1>
+	<div class="box">
+		<div id="data">Loading...</div>
+	</div>
+</body>
+</html>
